@@ -1,7 +1,0 @@
-SIMULADOR DE LICENCIA TIPO B Y F
-
-Para usarlo: abre index.html en un navegador moderno. Mantén index.html, style.css, script.js, questions.js y la carpeta assets juntos.
-
-El simulador presenta 20 preguntas aleatorias, calcula una nota sobre 20 y permite reintentar. Al reintentar, evita repetir las preguntas de la ronda anterior siempre que el banco tenga suficientes preguntas.
-
-El banco se basa en el documento de preguntas y opciones proporcionado. Las respuestas correctas se identificaron mediante el texto marcado en rojo en el documento.

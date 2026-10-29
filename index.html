@@ -1,39 +1,77 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123b35">
-  <title>Simulador de licencia tipo B y F</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102a43">
+  <title>Simulador de Licencias B y F</title>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <main class="app-shell">
-    <header class="hero">
-      <div class="brand-mark" aria-hidden="true">🚘</div>
-      <div><p class="eyebrow">PRÁCTICA DE CONDUCCIÓN</p><h1>Simulador de licencia B y F</h1><p class="hero-copy">20 preguntas aleatorias del banco de preguntas original.</p></div>
-    </header>
-    <section class="status-row" aria-label="Progreso del simulador">
-      <div class="status-card"><span class="status-label">Pregunta</span><strong id="progressText">1 de 20</strong></div>
-      <div class="status-card"><span class="status-label">Respondidas</span><strong id="answeredText">0 de 20</strong></div>
-      <div class="status-card"><span class="status-label">Puntaje máximo</span><strong>20/20</strong></div>
+  <header class="topbar">
+    <div class="brand-mark">B/F</div>
+    <div><p class="eyebrow">PRÁCTICA DE CONDUCCIÓN</p><h1>Simulador de licencias</h1></div>
+    <span class="total-pill">156 preguntas</span>
+  </header>
+
+  <main class="shell">
+    <section id="intro" class="panel intro-panel">
+      <div class="intro-copy">
+        <span class="tag">BANCO COMPLETO</span>
+        <h2>Prepárate para tu examen</h2>
+        <p>Responde las preguntas de las licencias tipo B y F. Al finalizar verás tu calificación, tus respuestas correctas y las que debes repasar.</p>
+        <div class="stats-row">
+          <div><strong>139</strong><span>Licencia B</span></div>
+          <div><strong>17</strong><span>Licencia F</span></div>
+          <div><strong>156</strong><span>Total</span></div>
+        </div>
+        <p class="source-note">Las respuestas correctas se basan en las opciones resaltadas en rojo en el documento original. Hay 3 preguntas sin respuesta marcada en la fuente; se mostrarán como no verificables y no se inventará una respuesta.</p>
+        <button id="startBtn" class="btn btn-primary">Comenzar simulador <span>→</span></button>
+      </div>
+      <div class="intro-art" aria-hidden="true"><div class="road-sign"><b>B</b><i>F</i></div><div class="road-line"></div></div>
     </section>
-    <div class="progress-track" aria-hidden="true"><div id="progressBar" class="progress-bar"></div></div>
-    <section id="quizPanel" class="quiz-panel">
-      <div class="question-top"><span id="questionNumber" class="question-number">PREGUNTA 1</span><span class="pill">Opción múltiple</span></div>
-      <h2 id="questionText">Cargando pregunta…</h2>
-      <div id="questionImageWrap" class="question-image-wrap" hidden><img id="questionImage" alt="Imagen asociada a la pregunta"></div>
-      <fieldset id="optionsList" class="options-list"><legend class="sr-only">Selecciona una respuesta</legend></fieldset>
-      <div class="nav-row"><button id="prevBtn" class="btn btn-secondary" type="button">Anterior</button><span id="saveHint" class="save-hint">Selecciona una opción para continuar.</span><button id="nextBtn" class="btn btn-primary" type="button">Siguiente</button></div>
-      <div class="submit-row"><button id="submitBtn" class="btn btn-submit" type="button">Terminar simulador</button><p id="unansweredHint" class="unanswered-hint">Puedes revisar tus respuestas antes de terminar.</p></div>
+
+    <section id="quiz" class="quiz-layout hidden">
+      <div class="quiz-main panel">
+        <div class="quiz-head">
+          <div><span id="licenseTag" class="tag">LICENCIA B</span><p id="questionCounter" class="muted">Pregunta 1 de 156</p></div>
+          <div class="progress-label"><strong id="progressPercent">0%</strong><span>completado</span></div>
+        </div>
+        <div class="progress-track"><div id="progressBar" class="progress-bar"></div></div>
+        <div class="question-area">
+          <h2 id="questionText"></h2>
+          <img id="questionImage" class="question-image hidden" alt="Imagen de apoyo de la pregunta">
+          <div id="options" class="options-list"></div>
+        </div>
+        <div class="quiz-footer">
+          <button id="prevBtn" class="btn btn-light">← Anterior</button>
+          <span id="answeredCount" class="muted">0 de 156 respondidas</span>
+          <button id="nextBtn" class="btn btn-primary">Siguiente →</button>
+          <button id="finishBtn" class="btn btn-finish hidden">Finalizar examen</button>
+        </div>
+      </div>
+      <aside class="panel navigator-panel">
+        <div class="navigator-title"><h3>Preguntas</h3><span id="navCount">0/156</span></div>
+        <p class="legend"><span class="legend-dot current"></span> Actual <span class="legend-dot done"></span> Respondida</p>
+        <div id="questionNav" class="question-nav"></div>
+        <button id="finishSideBtn" class="btn btn-finish btn-block">Entregar examen</button>
+      </aside>
     </section>
-    <section id="resultPanel" class="result-panel" hidden aria-live="polite">
-      <div id="resultIcon" class="result-icon">✓</div><p class="eyebrow">SIMULADOR FINALIZADO</p><h2 id="resultTitle">Tu calificación</h2>
-      <div class="score"><strong id="scoreValue">0</strong><span>/20</span></div><p id="resultMessage" class="result-message"></p>
-      <div class="result-stats"><div><strong id="correctCount">0</strong><span>Correctas</span></div><div><strong id="wrongCount">0</strong><span>Incorrectas</span></div><div><strong id="blankCount">0</strong><span>Sin responder</span></div></div>
-      <button id="retryBtn" class="btn btn-primary btn-large" type="button">Reintentar con otras 20 preguntas</button>
-      <div id="reviewList" class="review-list"></div>
+
+    <section id="results" class="panel results-panel hidden">
+      <div class="result-top"><span class="tag">RESULTADO DEL SIMULADOR</span><h2 id="resultTitle">Examen finalizado</h2><p id="resultSubtitle">Este es tu resultado.</p></div>
+      <div class="score-circle"><strong id="scoreValue">0/156</strong><span>calificación</span></div>
+      <div class="result-stats">
+        <div><strong id="correctCount" class="green">0</strong><span>Correctas</span></div>
+        <div><strong id="wrongCount" class="red">0</strong><span>Incorrectas</span></div>
+        <div><strong id="blankCount">0</strong><span>Sin responder</span></div>
+      </div>
+      <p id="unverifiedNote" class="source-note"></p>
+      <div class="result-actions"><button id="retryBtn" class="btn btn-primary">↻ Reintentar con otro orden</button><button id="reviewBtn" class="btn btn-light">Revisar respuestas</button></div>
+      <div id="reviewList" class="review-list hidden"></div>
     </section>
-    <footer><span>Basado en las preguntas y opciones del documento proporcionado.</span><span id="bankCount"></span></footer>
+    <footer>Material de práctica basado en el banco de preguntas proporcionado.</footer>
   </main>
-  <script src="questions.js"></script><script src="script.js"></script>
-</body></html>
+</body>
+</html>
